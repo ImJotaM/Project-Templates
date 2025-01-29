@@ -9,6 +9,8 @@ local projectName = _OPTIONS["projectName"] or "DefaultProject"
 local solutionDir = projectOut .. projectName
 local projectDir  = solutionDir .. "/" .. projectName
 
+local linking_dependencies = { "winmm", "setupapi", "imm32", "version", "SDL3-static" }
+
 workspace (projectName)
 
     configurations { "Debug", "Release" }
@@ -35,6 +37,9 @@ workspace (projectName)
         targetdir "$(SolutionDir)bin/$(Configuration)-$(Platform)/$(ProjectName)"
         objdir    "$(SolutionDir)bin-int/$(Configuration)-$(Platform)/$(ProjectName)"
         location  (projectDir)
+        includedirs "$(SolutionDir)_SDL3/include"
+	    libdirs "$(SolutionDir)_SDL3/lib"
+        links (linking_dependencies)
 
         filter "system:windows"
 
